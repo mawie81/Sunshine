@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.wiehlem.sunshine">
+          package="com.example.wiehlem.sunshine">
 
     <application
         android:allowBackup="true"
@@ -11,9 +11,9 @@
             android:name=".main"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
@@ -22,7 +22,7 @@
             android:parentActivityName=".main">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wiehlem.sunshine.main" />
+                android:value="com.example.wiehlem.sunshine.main"/>
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -30,10 +30,14 @@
             android:parentActivityName=".main">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wiehlem.sunshine.main" />
+                android:value="com.example.wiehlem.sunshine.main"/>
         </activity>
+
+        <provider
+            android:authorities="com.example.wiehlem.sunshine"
+            android:name=".data.WeatherProvider"/>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>
