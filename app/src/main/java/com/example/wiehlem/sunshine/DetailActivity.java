@@ -1,6 +1,9 @@
 package com.example.wiehlem.sunshine;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -49,50 +52,4 @@ public class DetailActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class DetailFragment extends Fragment {
-
-
-        private String forecast;
-        private ShareActionProvider provider;
-
-        public DetailFragment() {
-            setHasOptionsMenu(true);
-        }
-
-        @Override
-        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-            inflater.inflate(R.menu.detailfragment, menu);
-            provider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu.findItem(R.id.menu_share));
-            if (provider != null)
-                provider.setShareIntent(createShareIntent());
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            Intent intent = getActivity().getIntent();
-            View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-
-            if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-                forecast = intent.getStringExtra(Intent.EXTRA_TEXT);
-                TextView textView = (TextView) rootView.findViewById(R.id.forecast_text);
-                textView.setText(forecast);
-            }
-
-            return rootView;
-        }
-
-        private Intent createShareIntent() {
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-            intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_TEXT, forecast + " #SunshineApp");
-            return intent;
-        }
-    }
 }
