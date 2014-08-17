@@ -33,7 +33,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int FORECAST_LOADER = 0;
 
 
-    private SimpleCursorAdapter adapter;
+    private ForecastAdapter adapter;
 
     public ForecastFragment() {
     }
@@ -81,25 +81,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        adapter = new SimpleCursorAdapter(getActivity(),
-                R.layout.list_item_forecast,
+        adapter = new ForecastAdapter(getActivity(),
                 null,
-                new String[]{
-                        WeatherContract.WeatherEntry.COLUMN_DATETEXT,
-                        WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
-                        WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
-                        WeatherContract.WeatherEntry.COLUMN_MIN_TEMP
-                },
-                new int[]{
-                        R.id.list_item_date_textview,
-                        R.id.list_item_forecast_textview,
-                        R.id.list_item_high_textview,
-                        R.id.list_item_low_textview
-                },
                 0
         );
 
-        adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+        /*adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 boolean isMetric = Utility.isMetric(getActivity());
@@ -120,7 +107,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 }
                 return false;
             }
-        });
+        });*/
 
         ListView list = (ListView) rootView.findViewById(R.id.listview_forecast);
         list.setAdapter(adapter);
