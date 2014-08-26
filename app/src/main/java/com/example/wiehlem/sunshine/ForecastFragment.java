@@ -86,36 +86,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 0
         );
 
-        /*adapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            @Override
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                boolean isMetric = Utility.isMetric(getActivity());
-                switch (columnIndex) {
-                    case Utility.COL_WEATHER_MAX_TEMP:
-                    case Utility.COL_WEATHER_MIN_TEMP: {
-                        // we have to do some formatting and possibly a conversion
-                        ((TextView) view).setText(Utility.formatTemperature(
-                                cursor.getDouble(columnIndex), isMetric));
-                        return true;
-                    }
-                    case Utility.COL_WEATHER_DATE: {
-                        String dateString = cursor.getString(columnIndex);
-                        TextView dateView = (TextView) view;
-                        dateView.setText(Utility.formatDate(dateString));
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });*/
-
         ListView list = (ListView) rootView.findViewById(R.id.listview_forecast);
         list.setAdapter(adapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
+                ForecastAdapter adapter = (ForecastAdapter) adapterView.getAdapter();
                 if (adapter != null) {
                     Cursor cu = adapter.getCursor();
                     if (cu.moveToPosition(i)) {
