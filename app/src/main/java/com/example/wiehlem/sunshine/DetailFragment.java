@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wiehlem.sunshine.data.WeatherContract;
@@ -36,6 +37,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     private TextView mHumidityTextView;
     private TextView mPressureTextView;
     private TextView mWindTextView;
+    private ImageView mIcon;
 
 
     public DetailFragment() {
@@ -69,6 +71,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mHumidityTextView = (TextView) rootView.findViewById(R.id.detail_forecast_humidity);
         mPressureTextView = (TextView) rootView.findViewById(R.id.detail_forecast_pressure);
         mWindTextView = (TextView) rootView.findViewById(R.id.detail_forecast_wind);
+        mIcon = (ImageView) rootView.findViewById(R.id.detail_forecast_icon);
 
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             mDate = intent.getStringExtra(Intent.EXTRA_TEXT);
@@ -118,6 +121,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             mWindTextView.setText(wind);
             mPressureTextView.setText(pressure);
             mHumidityTextView.setText(humitity);
+            mIcon.setImageResource(Utility.getArtResourceForWeatherCondition(data.getInt(Utility.COL_WEATHER_ID)));
 
             mForecast = String.format("%s - %s - %s / %s", date, desc, maxTemp, minTemp);
         }

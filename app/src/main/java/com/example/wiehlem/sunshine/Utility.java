@@ -17,22 +17,23 @@ import java.util.Date;
  */
 public class Utility {
     public static final int COL_WEATHER_SETTING = 5;
-    public static final int COL_WEATHER_ID = 0;
+    public static final int COL_WEATHER_ID = 6;
     public static final int COL_WEATHER_DATE = 1;
     public static final int COL_WEATHER_DESC = 2;
     public static final int COL_WEATHER_MAX_TEMP = 3;
     public static final int COL_WEATHER_MIN_TEMP = 4;
-    public static final int COL_WEATHER_WIND_SPEED = 8;
+    public static final int COL_WEATHER_WIND_SPEED = 10;
     public static final int COL_WEATHER_WIND_DEGREE = 9;
-    public static final int COL_WEATHER_PRESSURE = 7;
-    public static final int COL_WEATHER_HUMIDITY = 6;
+    public static final int COL_WEATHER_PRESSURE = 8;
+    public static final int COL_WEATHER_HUMIDITY = 7;
     static final String[] FORECAST_COLUMNS = new String[]{
             WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
             WeatherContract.WeatherEntry.COLUMN_DATETEXT,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
-            WeatherContract.LocationEntry.COLUMN_SETTING
+            WeatherContract.LocationEntry.COLUMN_SETTING,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID
     };
 
     static final String[] DETAILS_COLUMNS = new String[]{
@@ -42,6 +43,7 @@ public class Utility {
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
             WeatherContract.LocationEntry.COLUMN_SETTING,
+            WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
             WeatherContract.WeatherEntry.COLUMN_PRESSURE,
             WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
@@ -216,6 +218,76 @@ public class Utility {
             direction = "NW";
         }
         return String.format(context.getString(windFormat), windSpeed, direction);
+    }
+
+    /**
+     * Helper method to provide the icon resource id according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     * @param weatherId from OpenWeatherMap API response
+     * @return resource id for the corresponding icon. -1 if no relation is found.
+     */
+    public static int getIconResourceForWeatherCondition(int weatherId) {
+        // Based on weather code data found at:
+        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+        if (weatherId >= 200 && weatherId <= 232) {
+            return R.drawable.ic_storm;
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return R.drawable.ic_light_rain;
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return R.drawable.ic_rain;
+        } else if (weatherId == 511) {
+            return R.drawable.ic_snow;
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return R.drawable.ic_rain;
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return R.drawable.ic_snow;
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return R.drawable.ic_fog;
+        } else if (weatherId == 761 || weatherId == 781) {
+            return R.drawable.ic_storm;
+        } else if (weatherId == 800) {
+            return R.drawable.ic_clear;
+        } else if (weatherId == 801) {
+            return R.drawable.ic_light_clouds;
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return R.drawable.ic_cloudy;
+        }
+        return -1;
+    }
+
+    /**
+     * Helper method to provide the art resource id according to the weather condition id returned
+     * by the OpenWeatherMap call.
+     * @param weatherId from OpenWeatherMap API response
+     * @return resource id for the corresponding image. -1 if no relation is found.
+     */
+    public static int getArtResourceForWeatherCondition(int weatherId) {
+    // Based on weather code data found at:
+    // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+        if (weatherId >= 200 && weatherId <= 232) {
+            return R.drawable.art_storm;
+        } else if (weatherId >= 300 && weatherId <= 321) {
+            return R.drawable.art_light_rain;
+        } else if (weatherId >= 500 && weatherId <= 504) {
+            return R.drawable.art_rain;
+        } else if (weatherId == 511) {
+            return R.drawable.art_snow;
+        } else if (weatherId >= 520 && weatherId <= 531) {
+            return R.drawable.art_rain;
+        } else if (weatherId >= 600 && weatherId <= 622) {
+            return R.drawable.art_snow;
+        } else if (weatherId >= 701 && weatherId <= 761) {
+            return R.drawable.art_fog;
+        } else if (weatherId == 761 || weatherId == 781) {
+            return R.drawable.art_storm;
+        } else if (weatherId == 800) {
+            return R.drawable.art_clear;
+        } else if (weatherId == 801) {
+            return R.drawable.art_light_clouds;
+        } else if (weatherId >= 802 && weatherId <= 804) {
+            return R.drawable.art_clouds;
+        }
+        return -1;
     }
 
 }
